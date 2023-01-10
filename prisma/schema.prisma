@@ -11,26 +11,26 @@ datasource db {
 }
 
 model User {
-  userId        Int             @id @default(autoincrement())
-  username      String          @unique @db.VarChar(255)
-  password      String          @db.VarChar(255)
-  createdAt     DateTime
-  updatedAt     DateTime?
-  UsersOnGroups UsersOnGroups[]
+  userId    Int             @id @default(autoincrement())
+  username  String          @unique @db.VarChar(255)
+  password  String          @db.VarChar(255)
+  createdAt DateTime
+  updatedAt DateTime?
+  groups    UsersOnGroups[]
 }
 
 model Role {
-  roleId        Int             @id @default(autoincrement())
-  name          String          @db.VarChar(50)
-  description   String?         @db.VarChar(255)
-  RolesOnGroups RolesOnGroups[]
+  roleId      Int             @id @default(autoincrement())
+  name        String          @unique @db.VarChar(50)
+  description String?         @db.VarChar(255)
+  groups      RolesOnGroups[]
 }
 
 model Group {
-  groupId       Int             @id @default(autoincrement())
-  name          String          @db.VarChar(50)
-  RolesOnGroups RolesOnGroups[]
-  UsersOnGroups UsersOnGroups[]
+  groupId Int             @id @default(autoincrement())
+  name    String          @unique @db.VarChar(50)
+  roles   RolesOnGroups[]
+  users   UsersOnGroups[]
 }
 
 model RolesOnGroups {
