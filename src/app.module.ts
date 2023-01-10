@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { UserModule } from './modules/rest/user/user.module';
 import { GlobalModule } from './modules/global/global.module';
-import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [GlobalModule, UserModule],

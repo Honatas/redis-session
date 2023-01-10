@@ -14,8 +14,6 @@ model Users {
   userId    Int       @id @default(autoincrement())
   username  String    @unique @db.VarChar(255)
   password  String    @db.VarChar(255)
-  fullName  String    @db.VarChar(255)
-  status    String    @db.VarChar(1)
   createdAt DateTime
   updatedAt DateTime?
 }
