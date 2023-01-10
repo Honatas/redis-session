@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreateUserRequest } from './request/create.user.request';
-import { UserDao } from './user.dao';
 import * as bcrypt from 'bcrypt';
+import { CreateUserRequest } from './request/create.user.request';
 import { LoginRequest } from './request/login.request';
+import { UserDao } from './user.dao';
 
 @Injectable()
 export class UserService {
@@ -14,7 +14,7 @@ export class UserService {
       throw new BadRequestException(`Username ${request.username} already exists`);
     }
 
-    const user: Prisma.UsersCreateInput = {
+    const user: Prisma.UserCreateInput = {
       username: request.username,
       password: await bcrypt.hash(request.password, 10),
       createdAt: new Date(),
