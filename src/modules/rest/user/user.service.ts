@@ -1,9 +1,11 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { UserDto } from 'src/dto/user.dto';
+import { Utils } from 'src/utils';
 import { CreateUserRequest } from './request/create.user.request';
 import { LoginRequest } from './request/login.request';
-import { UserDao } from './user.dao';
+import { UserDao, UserModel } from './user.dao';
 
 @Injectable()
 export class UserService {
@@ -32,5 +34,25 @@ export class UserService {
     if (!(await bcrypt.compare(request.password, user.password))) {
       throw new UnauthorizedException('Invalid user/password');
     }
+
+    Utils.inspect(this.getUserDto(user));
+  }
+
+  private getUserDto(user: UserModel): UserDto {
+    const userDto = {
+      userId: user.userId,
+      username: user.username,
+      roles: [] as string[],
+    };
+
+    for (const group of user.groups) {
+      for (const role of group.group.roles) {
+        if (userDto.roles.indexOf(role.role.name) == -1) {
+          userDto.roles.push(role.role.name);
+        }
+      }
+    }
+
+    return userDto;
   }
 }
