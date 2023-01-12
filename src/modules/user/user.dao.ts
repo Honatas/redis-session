@@ -24,24 +24,33 @@ export type UserModel = Prisma.UserGetPayload<{
 export class UserDao {
   constructor(private prisma: PrismaService) {}
 
-  public async findByUsername(username: string): Promise<UserModel | null> {
-    return this.prisma.user.findUnique({
-      where: { username },
+  private userRelations = {
+    groups: {
       include: {
-        groups: {
+        group: {
           include: {
-            group: {
+            roles: {
               include: {
-                roles: {
-                  include: {
-                    role: true,
-                  },
-                },
+                role: true,
               },
             },
           },
         },
       },
+    },
+  };
+
+  public async findById(userId: number): Promise<UserModel | null> {
+    return this.prisma.user.findUnique({
+      where: { userId },
+      include: this.userRelations,
+    });
+  }
+
+  public async findByUsername(username: string): Promise<UserModel | null> {
+    return this.prisma.user.findUnique({
+      where: { username },
+      include: this.userRelations,
     });
   }
 

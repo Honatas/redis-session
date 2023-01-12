@@ -1,10 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as connectRedis from 'connect-redis';
+import * as session from 'express-session';
 import { default as Redis } from 'ioredis';
 import { AppModule } from './app.module';
-import * as session from 'express-session';
-import * as connectRedis from 'connect-redis';
 
 async function bootstrap() {
   let RedisStore = connectRedis(session);

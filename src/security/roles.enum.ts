@@ -1,0 +1,5 @@
+export enum Role {
+  CREATE_ROLE = 'CREATE_ROLE',
+  CREATE_GROUP = 'CREATE_GROUP',
+  ASSIGN_USERS = 'ASSIGN_USERS',
+}

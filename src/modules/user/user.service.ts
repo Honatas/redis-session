@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from 'src/dto/user.dto';
+import { AssignRequest } from './request/assign.request';
 import { CreateUserRequest } from './request/create.user.request';
 import { LoginRequest } from './request/login.request';
 import { UserDao, UserModel } from './user.dao';
@@ -35,6 +36,15 @@ export class UserService {
     }
 
     return this.getUserDto(user);
+  }
+
+  public async assign(request: AssignRequest): Promise<void> {
+    // TODO: transaction
+    const user = await this.userDao.findById(request.userId);
+    if (!user) {
+      throw new BadRequestException(`User with id ${request.userId} not found`);
+    }
+    // user.groups;
   }
 
   private getUserDto(user: UserModel): UserDto {
