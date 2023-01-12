@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from 'src/dto/user.dto';
-import { Utils } from 'src/utils';
 import { CreateUserRequest } from './request/create.user.request';
 import { LoginRequest } from './request/login.request';
 import { UserDao, UserModel } from './user.dao';
@@ -25,7 +24,7 @@ export class UserService {
     await this.userDao.createUser(user);
   }
 
-  public async login(request: LoginRequest): Promise<void> {
+  public async login(request: LoginRequest): Promise<UserDto> {
     const user = await this.userDao.findByUsername(request.username);
     if (!user) {
       throw new UnauthorizedException('Invalid user/password');
@@ -35,7 +34,7 @@ export class UserService {
       throw new UnauthorizedException('Invalid user/password');
     }
 
-    Utils.inspect(this.getUserDto(user));
+    return this.getUserDto(user);
   }
 
   private getUserDto(user: UserModel): UserDto {

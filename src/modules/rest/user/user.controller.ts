@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Session } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserRequest } from './request/create.user.request';
 import { LoginRequest } from './request/login.request';
@@ -19,8 +19,11 @@ export class UserController {
   @Post('/login')
   @HttpCode(200)
   @ApiOperation({ summary: 'Performs a login for the supplied user ' })
-  async login(@Body() request: LoginRequest): Promise<Record<string, unknown>> {
-    await this.userService.login(request);
+  async login(
+    @Body() request: LoginRequest,
+    @Session() session: Record<string, unknown>,
+  ): Promise<Record<string, unknown>> {
+    session.user = await this.userService.login(request);
     return {};
   }
 }
