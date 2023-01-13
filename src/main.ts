@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
 import { LoggingInterceptor } from './middleware/logging.interceptor';
 
 async function bootstrap() {
-  let RedisStore = connectRedis(session);
+  const RedisStore = connectRedis(session);
   const redisClient = new Redis();
 
   const app = await NestFactory.create(AppModule);
