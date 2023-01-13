@@ -26,7 +26,7 @@ export class RolesGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    // Check if user has required roles
+    // Check if user has required roles (will throw ForbiddenException if not)
     return requiredRoles.some((role) => user.roles?.includes(role));
   }
 }

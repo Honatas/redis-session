@@ -1,9 +1,10 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class AssignRequest {
   @IsNotEmpty()
   @IsNumber()
   userId: number;
 
-  roleIds: number[];
+  @IsArray()
+  groupIds: number[];
 }
