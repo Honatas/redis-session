@@ -5,6 +5,7 @@ import * as connectRedis from 'connect-redis';
 import * as session from 'express-session';
 import { default as Redis } from 'ioredis';
 import { AppModule } from './app.module';
+import { LoggingInterceptor } from './middleware/logging.interceptor';
 
 async function bootstrap() {
   let RedisStore = connectRedis(session);
@@ -20,6 +21,7 @@ async function bootstrap() {
     }),
   );
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('Auth')

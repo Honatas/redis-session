@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Session } from '@nestjs/common';
+import { Body, Controller, HttpCode, Logger, Post, Session } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/security/roles.decorator';
 import { Role } from 'src/security/roles.enum';
@@ -10,6 +10,8 @@ import { UserService } from './user.service';
 @Controller('user')
 @ApiTags('User')
 export class UserController {
+  public readonly logger = new Logger(UserController.name);
+
   constructor(private userService: UserService) {}
 
   @Post()

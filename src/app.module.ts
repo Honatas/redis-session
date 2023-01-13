@@ -1,8 +1,7 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { LoggerMiddleware } from './middleware/logger.middleware';
-import { UserModule } from './modules/user/user.module';
-import { GlobalModule } from './modules/global/global.module';
+import { Module } from '@nestjs/common';
 import { RolesGuard } from './middleware/roles.guard';
+import { GlobalModule } from './modules/global/global.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [GlobalModule, UserModule],
@@ -13,8 +12,4 @@ import { RolesGuard } from './middleware/roles.guard';
     },
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(LoggerMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}
