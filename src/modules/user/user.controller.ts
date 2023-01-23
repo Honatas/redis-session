@@ -23,7 +23,7 @@ export class UserController {
 
   @Post('/login')
   @HttpCode(200)
-  @ApiOperation({ summary: 'Performs a login for the supplied user' })
+  @ApiOperation({ summary: 'Performs a login for the supplied user. Returns a SetCookie header.' })
   async login(
     @Body() request: LoginRequest,
     @Session() session: Record<string, unknown>,
@@ -35,7 +35,7 @@ export class UserController {
   @Post('/assign')
   @Roles(Role.ASSIGN_USERS)
   @HttpCode(200)
-  @ApiOperation({ summary: 'Assigns a user to an access group' })
+  @ApiOperation({ summary: "Assigns a user to access groups. Overrides all of the user's groups." })
   async assign(@Body() request: AssignRequest): Promise<Record<string, unknown>> {
     await this.userService.assign(request);
     return {};
